@@ -12,13 +12,14 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useNavigate } from "react-router-dom";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -89,7 +90,11 @@ const Header = () => {
               <MenuItem
                 onClick={() => {
                   handleCloseNavMenu();
-                  navigate("/products");
+                  navigate(
+                    location.pathname === "/products"
+                      ? `/products${window.location.search}`
+                      : "/products"
+                  );
                 }}>
                 <Typography textAlign="center">Produts</Typography>
               </MenuItem>
@@ -125,7 +130,11 @@ const Header = () => {
             <Button
               onClick={() => {
                 handleCloseNavMenu();
-                navigate("/products");
+                navigate(
+                  location.pathname === "/products"
+                    ? `/products${window.location.search}`
+                    : "/products"
+                );
               }}
               sx={{ my: 2, color: "white", display: "block" }}>
               Products
@@ -139,11 +148,21 @@ const Header = () => {
               Add Product
             </Button>
           </Box>
-
+          <Box>
+            <IconButton
+              onClick={() => navigate("/cart")}
+              color="inherit"
+              aria-label="add to shopping cart">
+              <AddShoppingCartIcon />
+            </IconButton>
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                <Avatar
+                  alt="Remy Sharp"
+                  src="https://steamuserimages-a.akamaihd.net/ugc/936063271543105270/6435B1CF01B822D3E97300E3594ACEBD87791D43/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+                />
               </IconButton>
             </Tooltip>
             <Menu
