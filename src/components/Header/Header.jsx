@@ -14,12 +14,21 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Badge } from "@mui/material";
+import { cartContext } from "../../contexts/cartContext";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { getCart, count } = React.useContext(cartContext);
+
+  React.useEffect(() => {
+    getCart();
+  }, []);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -149,11 +158,10 @@ const Header = () => {
             </Button>
           </Box>
           <Box>
-            <IconButton
-              onClick={() => navigate("/cart")}
-              color="inherit"
-              aria-label="add to shopping cart">
-              <AddShoppingCartIcon />
+            <IconButton onClick={() => navigate("/cart")} color="inherit">
+              <Badge badgeContent={count} color="error">
+                <AddShoppingCartIcon />
+              </Badge>
             </IconButton>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
